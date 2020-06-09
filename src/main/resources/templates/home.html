@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+</head>
+<body>
+    <h1>All questions are mandatory</h1>
+    <form th:action="@{/success}" th:object="${formCommand}">
+        <div th:each="q,qs:${contest.questions}">
+            <label th:text="${q.description}"></label>
+            <div th:each="o,os:${q.options}">
+<!--                uncomment the th:field and th:value, everything works fine
+                but when these are put it replaces the name and all input have the same name.
+                you can't select different answers for each questions.-->
+                <input type="radio"
+                       th:field="*{answers}"
+                       th:value="${o.option}"
+                       th:name="${'q'+qs.count}"
+                       th:id="${'q'+qs.count+'o'+os.count}">
+                <label th:text="${o.option}"></label>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="Submit" id="submit">
+        </div>
+    </form>
+</body>
+</html>
